@@ -3,8 +3,6 @@ import { notFound } from "next/navigation";
 import { PublicLinkItem } from "@/components/profile/public-link-item";
 import { Metadata } from "next";
 
-export const revalidate = 60; // ISR revalidate every 60s
-
 type Props = {
   params: Promise<{ username: string }>;
 };
