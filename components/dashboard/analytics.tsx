@@ -64,7 +64,7 @@ export function Analytics({ data }: { data: any[] }) {
                 <Tooltip 
                   cursor={{ fill: 'rgba(0,0,0,0.05)' }}
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-                  labelFormatter={(label) => new Date(label).toLocaleDateString()}
+                  labelFormatter={(label) => new Date(label as string | number).toLocaleDateString()}
                 />
                 <Bar 
                   dataKey="clicks" 

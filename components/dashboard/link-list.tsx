@@ -43,7 +43,7 @@ export function LinkList({ initialLinks }: { initialLinks: any[] }) {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      let newLinks = [];
+      let newLinks: any[] = [];
       setLinks((items) => {
         const oldIndex = items.findIndex((i) => i.id === active.id);
         const newIndex = items.findIndex((i) => i.id === over.id);

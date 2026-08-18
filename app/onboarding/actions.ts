@@ -15,7 +15,7 @@ export async function createProfile(formData: FormData) {
   const bio = formData.get("bio") as string;
 
   if (!username) {
-    return { error: "Username is required" };
+    throw new Error("Username is required");
   }
 
   // Attempt to insert profile
@@ -27,9 +27,9 @@ export async function createProfile(formData: FormData) {
 
   if (error) {
     if (error.code === "23505") { // unique violation
-      return { error: "Username is already taken" };
+      throw new Error("Username is already taken");
     }
-    return { error: "An error occurred while creating your profile" };
+    throw new Error("An error occurred while creating your profile");
   }
 
   redirect("/dashboard");

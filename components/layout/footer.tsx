@@ -9,7 +9,7 @@ export function Footer() {
         <div className="flex flex-col items-center gap-4 md:flex-row md:gap-3 md:px-0">
           <Layers className="size-5 text-muted-foreground" />
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            Built with ❤️ for creators. © {new Date().getFullYear()} LinkyBun.
+            Built with ❤️ for creators. © 2026 LinkyBun.
           </p>
         </div>
         <div className="flex items-center gap-6 text-sm text-muted-foreground">
