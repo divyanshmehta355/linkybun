@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { PublicLinkItem } from "@/components/profile/public-link-item";
 import { Metadata } from "next";
 
+export const instant = false;
+
 type Props = {
   params: Promise<{ username: string }>;
 };
