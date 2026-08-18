@@ -67,7 +67,7 @@ export default async function DashboardPage() {
             <div className="bg-muted/50 p-4 rounded-xl border border-dashed">
               <AddLinkForm />
             </div>
-            
+
             <LinkList initialLinks={links || []} />
           </div>
 
@@ -77,6 +77,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }
