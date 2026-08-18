@@ -102,6 +102,16 @@ If you wish to just develop locally and not deploy to Vercel, [follow the steps 
 
 Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
 
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Known Limitations
+
+- **Click Tracking Abuse**: Currently, anyone can insert into the `clicks` table without rate-limiting. A malicious user could spam-click links to fake analytics data. In a production environment, you should add IP-based rate limiting (via middleware or Edge functions) to mitigate this.
+
 ## More Supabase examples
 
 - [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
