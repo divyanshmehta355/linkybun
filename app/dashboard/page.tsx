@@ -2,8 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { LinkList } from "@/components/dashboard/link-list";
 import { AddLinkForm } from "@/components/dashboard/add-link-form";
-
 import { Analytics } from "@/components/dashboard/analytics";
+import { UpgradeButton } from "@/components/dashboard/upgrade-button";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -65,9 +65,10 @@ export default async function DashboardPage() {
           
           <div className="rounded-lg border p-6 bg-card text-card-foreground">
             <h3 className="font-semibold mb-2">Welcome, {profile.username}!</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-4">
               Add some links and reorder them by dragging. Changes are saved automatically.
             </p>
+            <UpgradeButton isPro={profile.is_pro} />
           </div>
         </div>
       </div>
