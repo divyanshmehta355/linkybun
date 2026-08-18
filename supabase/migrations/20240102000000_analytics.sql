@@ -8,7 +8,7 @@ RETURNS TABLE (
 BEGIN
   RETURN QUERY
   WITH link_list AS (
-    SELECT id, title FROM public.links WHERE profile_id = p_profile_id
+    SELECT public.links.id, public.links.title FROM public.links WHERE public.links.profile_id = p_profile_id
   ),
   daily_clicks AS (
     SELECT 
