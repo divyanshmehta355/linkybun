@@ -13,30 +13,47 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
   const [message, setMessage] = useState<{ text: string; isError: boolean } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
     setIsLoading(true);
     setMessage(null);
 
     try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/confirm`,
-        },
-      });
-      if (error) throw error;
-      setMessage({ text: "Check your email for the login link!", isError: false });
+      if (isSignUp) {
+        const { error, data } = await supabase.auth.signUp({
+          email,
+          password,
+        });
+        if (error) throw error;
+        
+        if (data.session) {
+          router.push("/dashboard");
+        } else {
+          setMessage({ text: "Check your email to confirm your account", isError: false });
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        
+        router.push("/dashboard");
+      }
     } catch (error: unknown) {
       setMessage({
         text: error instanceof Error ? error.message : "An error occurred",
@@ -51,13 +68,13 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login / Sign up</CardTitle>
+          <CardTitle className="text-2xl">{isSignUp ? "Sign Up" : "Login"}</CardTitle>
           <CardDescription>
-            Enter your email below to receive a magic link
+            {isSignUp ? "Create a new account" : "Enter your email and password below to login"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
@@ -68,6 +85,17 @@ export function LoginForm({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               
@@ -83,8 +111,22 @@ export function LoginForm({
               )}
               
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Sending link..." : "Send Magic Link"}
+                {isLoading ? "Please wait..." : (isSignUp ? "Sign Up" : "Login")}
               </Button>
+            </div>
+            
+            <div className="mt-4 text-center text-sm">
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setMessage(null);
+                }}
+                className="underline underline-offset-4"
+              >
+                {isSignUp ? "Login" : "Sign up"}
+              </button>
             </div>
           </form>
         </CardContent>
