@@ -1,119 +1,86 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# LinkyBun
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+LinkyBun is a modern, high-performance link-in-bio platform built for creators, professionals, and brands. It allows users to create a customizable, centralized page to share all their important links with their audience in one place.
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+## 🚀 Features
 
-## Features
+- **Personalized Public Profiles:** Claim a unique username (e.g., `linkybun.com/creator`) and customize your public-facing bio and links.
+- **Intuitive Dashboard:** A seamless, easy-to-use dashboard to add, edit, and delete links.
+- **Drag-and-Drop Reordering:** Effortlessly organize your links with smooth drag-and-drop functionality using `@dnd-kit`.
+- **Advanced Analytics:** Track the performance of your links with beautiful, interactive charts powered by `Recharts`. Monitor clicks over time and discover what content resonates most with your audience.
+- **Pro Upgrades:** Users can upgrade to a Pro tier for premium features, with payment processing integrated via Razorpay.
+- **Secure by Default:** Built on Supabase with robust Row Level Security (RLS) to ensure your data is perfectly protected.
+- **High Performance:** Statically generated public profiles and dynamic, authenticated dashboards utilizing Next.js App Router and Turbopack.
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Proxy
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+## 🛠️ Technology Stack
 
-## Demo
+- **Framework:** Next.js 15+ (App Router, Turbopack, Server Actions)
+- **Database & Auth:** Supabase (PostgreSQL, GoTrue Auth, Row Level Security)
+- **Styling:** Tailwind CSS, `shadcn/ui`
+- **Charts:** Recharts
+- **Drag & Drop:** `@dnd-kit`
+- **Payments:** Razorpay
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+## 🌊 Application Flows
 
-## Deploy to Vercel
+LinkyBun's architecture is designed around several core user flows:
 
-Vercel deployment will guide you through creating a Supabase account and project.
+### 1. Onboarding & Authentication Flow
+- **Sign Up / Log In:** Users authenticate via Supabase Auth (`/auth/login`). 
+- **Middleware Protection:** Our custom Next.js middleware intelligently protects authenticated routes while allowing public profiles to remain completely open.
+- **Claiming a Username:** New users are automatically routed to `/onboarding` to claim a unique username and setup their profile before they can access the dashboard.
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+### 2. Creator Dashboard Flow
+- **Link Management:** In the `/dashboard`, users can instantly add new links, toggle their visibility, delete them, and rearrange them via a drag-and-drop interface.
+- **Real-Time Updates:** Changes are instantly synced with the Supabase backend via Server Actions and automatically revalidated.
+- **Analytics View:** Creators can analyze their link performance over the past 7 days, filtering by specific links to view granular data.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+### 3. Public Profile Flow
+- **Visitor Access:** When a visitor lands on a creator's page (e.g., `/[username]`), they are served a lightning-fast, SEO-optimized page.
+- **Click Tracking:** Interactions on the public page securely increment click counts in the backend for the creator's analytics, entirely anonymously.
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+## 💻 Local Development
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+### Prerequisites
+- Node.js (v18+)
+- A Supabase Project (Database, Auth)
+- A Razorpay Account (for testing payments)
 
-## Clone and run locally
+### Setup
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
-
-2. Create a Next.js app using the Supabase Starter template npx command
-
+1. **Clone the repository:**
    ```bash
-   npx create-next-app --example with-supabase with-supabase-app
+   git clone https://github.com/divyanshmehta355/linkybun.git
+   cd linkybun
    ```
 
+2. **Install dependencies:**
    ```bash
-   yarn create next-app --example with-supabase with-supabase-app
+   npm install
    ```
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
+3. **Configure Environment Variables:**
+   Rename `.env.local.example` to `.env.local` and add your keys:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
+   NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
+   RAZORPAY_KEY_SECRET=your_razorpay_secret
    ```
 
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
-
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
-
-5. You can now run the Next.js local development server:
-
+4. **Run the development server:**
    ```bash
    npm run dev
    ```
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+5. **Open the app:**
+   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+## 🔒 Security Notes
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+- **Row Level Security (RLS):** Policies are strictly enforced at the database level. Creators can only modify their own profiles and links, while public profile reads are allowed globally.
+- **Click Tracking:** In a production environment, it is highly recommended to implement rate limiting on the `/clicks` endpoint to prevent abuse of analytics data.
 
-## Feedback and issues
+---
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## Known Limitations
-
-- **Click Tracking Abuse**: Currently, anyone can insert into the `clicks` table without rate-limiting. A malicious user could spam-click links to fake analytics data. In a production environment, you should add IP-based rate limiting (via middleware or Edge functions) to mitigate this.
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+Built with ❤️ for creators.
