@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { MainLayout } from "@/components/layout/main-layout";
 
 export const instant = false;
 
@@ -34,48 +35,50 @@ export default async function OnboardingPage() {
   }
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-md">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">Claim your link</CardTitle>
-            <CardDescription>
-              Choose a unique username for your LinkyBun profile
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form action={createProfile}>
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-2">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="e.g. awesome-creator"
-                    required
-                    pattern="^[a-zA-Z0-9_-]+$"
-                    title="Only letters, numbers, underscores, and hyphens"
-                  />
+    <MainLayout>
+      <div className="flex flex-1 w-full items-center justify-center p-6 md:p-10">
+        <div className="w-full max-w-md">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl">Claim your link</CardTitle>
+              <CardDescription>
+                Choose a unique username for your LinkyBun profile
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form action={createProfile}>
+                <div className="flex flex-col gap-6">
+                  <div className="grid gap-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      name="username"
+                      type="text"
+                      placeholder="e.g. awesome-creator"
+                      required
+                      pattern="^[a-zA-Z0-9_-]+$"
+                      title="Only letters, numbers, underscores, and hyphens"
+                    />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="bio">Bio (Optional)</Label>
+                    <Input
+                      id="bio"
+                      name="bio"
+                      type="text"
+                      placeholder="A short description about yourself"
+                    />
+                  </div>
+                  
+                  <Button type="submit" className="w-full">
+                    Continue to Dashboard
+                  </Button>
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="bio">Bio (Optional)</Label>
-                  <Input
-                    id="bio"
-                    name="bio"
-                    type="text"
-                    placeholder="A short description about yourself"
-                  />
-                </div>
-                
-                <Button type="submit" className="w-full">
-                  Continue to Dashboard
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }

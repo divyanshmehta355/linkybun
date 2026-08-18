@@ -4,6 +4,7 @@ import { LinkList } from "@/components/dashboard/link-list";
 import { AddLinkForm } from "@/components/dashboard/add-link-form";
 import { Analytics } from "@/components/dashboard/analytics";
 import { UpgradeButton } from "@/components/dashboard/upgrade-button";
+import { MainLayout } from "@/components/layout/main-layout";
 
 export const instant = false;
 
@@ -34,42 +35,44 @@ export default async function DashboardPage() {
     .order("position", { ascending: true });
 
   // Fetch analytics via RPC
-  const { data: analyticsData } = await supabase
+  const { data: analyticsData, error: analyticsError } = await supabase
     .rpc("get_link_analytics", { p_profile_id: user.id });
 
+  if (analyticsError) {
+    console.error("Analytics Error:", analyticsError);
+  }
+
   return (
-    <div className="flex-1 w-full flex flex-col items-center max-w-4xl mx-auto p-4 md:p-8">
-      <div className="w-full flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <div className="flex gap-4 items-center">
-          <span className="text-sm text-muted-foreground">
-            linkybun.com/{profile.username}
-          </span>
-          <a
-            href={`/${profile.username}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm font-medium underline"
-          >
-            View Profile
-          </a>
+    <MainLayout>
+      <div className="flex-1 w-full flex flex-col items-center max-w-4xl mx-auto p-4 md:p-8">
+        <div className="w-full flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <div className="flex gap-4 items-center">
+            <span className="text-sm text-muted-foreground">
+              linkybun.com/{profile.username}
+            </span>
+            <a
+              href={`/${profile.username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-primary hover:underline"
+            >
+              View Profile &rarr;
+            </a>
+          </div>
         </div>
-      </div>
-      
-      <div className="w-full grid gap-8 md:grid-cols-3">
-        <div className="md:col-span-2 flex flex-col gap-8">
-          <AddLinkForm />
-          <LinkList initialLinks={links || []} />
-        </div>
-        
-        <div className="flex flex-col gap-6">
-          <Analytics data={analyticsData || []} />
-          
-          <div className="rounded-lg border p-6 bg-card text-card-foreground">
-            <h3 className="font-semibold mb-2">Welcome, {profile.username}!</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Add some links and reorder them by dragging. Changes are saved automatically.
-            </p>
+
+        <div className="w-full flex flex-col md:flex-row gap-8">
+          <div className="flex-1 flex flex-col gap-6">
+            <div className="bg-muted/50 p-4 rounded-xl border border-dashed">
+              <AddLinkForm />
+            </div>
+            
+            <LinkList initialLinks={links || []} />
+          </div>
+
+          <div className="w-full md:w-80 flex flex-col gap-6">
+            <Analytics data={analyticsData || []} />
             <UpgradeButton isPro={profile.is_pro} />
           </div>
         </div>
